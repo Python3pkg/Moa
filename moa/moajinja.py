@@ -73,8 +73,8 @@ def getProcessInfo(pid):
     p = subprocess.Popen(cl, stdout=subprocess.PIPE)
     out = p.communicate()[0].strip().split(None, 7)
     if not out: return {}
-    pi = dict(zip(
-        'uid pid ppid c stime tty time cmd'.split(), out))
+    pi = dict(list(zip(
+        'uid pid ppid c stime tty time cmd'.split(), out)))
 
     #check if this is moa invocation
     if 'python' in pi['cmd'] and \
@@ -96,7 +96,7 @@ def getMoaBase():
     
     :rtype: string (path) 
     """
-    if os.environ.has_key('MOABASE'):
+    if 'MOABASE' in os.environ:
         MOABASE = os.environ["MOABASE"]
         return MOABASE
 
@@ -183,7 +183,7 @@ def flog(func):
         l.critical("Executing %s" % func.__name__)
         for a in args:
             l.error("  - calling with arg %s" % a)
-        for k in kwargs.keys():
+        for k in list(kwargs.keys()):
             l.error("  - calling with kwargs %s=%s" % (k, kwargs[k]))
         return func(*args, **kwargs)
     return flogger

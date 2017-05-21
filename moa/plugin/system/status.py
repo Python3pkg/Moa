@@ -117,7 +117,7 @@ def _getStatus(job, silent=False):
         os.unlink(pidFile)
         _setStatus(job, 'error')
 
-    except OSError, e:
+    except OSError as e:
         if e.errno == 2:
             #weird - the pid file dissapeared -
             moa.ui.warn("weird - pidfile dissapeared")
@@ -132,7 +132,7 @@ def _setStatus(job, status):
     l.debug("set job status to %s" % status)
     sysConf.job.status = status
     statusFile = os.path.join(job.wd, '.moa', 'status')
-    if LLOG: print 'writing status %s' % status
+    if LLOG: print('writing status %s' % status)
     with open(statusFile, 'w') as F:
         F.write("%s" % status)
 
@@ -147,7 +147,7 @@ def _removePid(job):
     pidFile = os.path.join(job.wd, '.moa', 'pid')
     try:
         os.unlink(pidFile)
-    except OSError, e:
+    except OSError as e:
         if e.errno != 2:
             raise
 
@@ -168,7 +168,7 @@ def kill(job, args):
     it by sending SIGKILL (-9) to the job.
     """
     status = _getStatus(job)
-    print status
+    print(status)
     if not status == 'running':
         moa.ui.exitError("Job is not running")
 
@@ -221,12 +221,12 @@ def pause(job, args):
     Pause a running job
     """
     status = _getStatus(job)
-    if LLOG: print 'pausing job with status', status
+    if LLOG: print('pausing job with status', status)
     if status != 'running':
         moa.ui.exitError("Not running")
 
     pid = _getPid(job)
-    print pid
+    print(pid)
     moa.ui.warn("Pausing job %d" % pid)
     os.kill(pid, 19)
     _setStatus(job, 'paused')
@@ -238,7 +238,7 @@ def resume(job, args):
     Resume a running job
     """
     status = _getStatus(job)
-    if LLOG: print 'resuming job with status', status
+    if LLOG: print('resuming job with status', status)
     if status != 'paused':
         moa.ui.exitError("Not paused")
 

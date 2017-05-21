@@ -161,7 +161,7 @@ class JobConf(object):
 
         # first get the vars that do not need expanding and remember
         # vars that do need jinja2 rendering
-        for k in self.keys():
+        for k in list(self.keys()):
             v = self[k]
             templateInfo = self.job.template.parameters[k]
             if templateInfo.get('prevent_expansion', False):
@@ -214,7 +214,7 @@ class JobConf(object):
             return rv
         else:
             ov = {}
-            for k in rv.keys():
+            for k in list(rv.keys()):
                 if not self.isPrivate(k):
                     ov[k] = rv[k]
             return ov
@@ -238,7 +238,7 @@ class JobConf(object):
 
     def getPublicParameters(self):
         rv = []
-        for k in self.keys():
+        for k in list(self.keys()):
             if k in self.private:
                 continue
             if self.job.template.parameters[k].private:
@@ -274,7 +274,7 @@ class JobConf(object):
 
         #find relative links & see if they need to be adjusted
         if loadingRecursive:
-            for k, v in y.items():
+            for k, v in list(y.items()):
 
                 #check if this needs to be adapted or not
                 parType = self.job.template.parameters.get(k, {}).get('type')
@@ -312,7 +312,7 @@ class JobConf(object):
         """
         Check if the config is empty is empty
         """
-        for k in self.keys():
+        for k in list(self.keys()):
             if self[k]:
                 return False
         return True
@@ -402,7 +402,7 @@ class JobConf(object):
         del(self.localConf[key])
 
     def __setitem__(self, key, value):
-        if key in self.job.template.parameters.keys():
+        if key in list(self.job.template.parameters.keys()):
             pd = self.job.template.parameters[key]
             if pd.type == 'boolean':
                 if value.lower() in ["yes", "true", "1", 'y', 't']:

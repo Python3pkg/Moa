@@ -72,7 +72,7 @@ def precommand(job, args):
 
 def executeExtraCommand(command, job):
     jobData = job.conf
-    for k in job.conf.keys():
+    for k in list(job.conf.keys()):
         v = job.conf[k]
         if isinstance(v, list):
             os.putenv(k, " ".join(v))

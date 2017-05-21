@@ -82,8 +82,8 @@ class SysConf(Yaco.Yaco):
             lri = 1
 
         #finally, map environment variables on top of config
-        if self.has_key('environ'):
-            for k, v in self.environ.items():
+        if 'environ' in self:
+            for k, v in list(self.environ.items()):
                 if not k in os.environ:
                     continue
                 venv = _interpret_var(os.environ[k])
@@ -95,7 +95,7 @@ class SysConf(Yaco.Yaco):
                 exec('self.%s = %s' % (v, venv))
                 #print eval('self.%s' % v)
 
-        else: print self.keys()
+        else: print(list(self.keys()))
 
     def getUser(self):
         """

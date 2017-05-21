@@ -10,10 +10,10 @@ def getArgs():
         return {}
     with open('.moa/template') as F:
         templateData = yaml.load(F)
-    filesets = templateData.get('filesets', {}).keys()
+    filesets = list(templateData.get('filesets', {}).keys())
 
     rv = {}
-    for a in os.environ.keys():
+    for a in list(os.environ.keys()):
         if a[:4] != 'moa_': continue
         ky = a[4:]
         va = os.environ[a]

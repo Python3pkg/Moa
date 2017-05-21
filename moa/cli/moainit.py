@@ -15,7 +15,7 @@ def moainit():
     #get the moa.sh script
     moash = pkg_resources.resource_filename(
         'moa', 'data/etc/profile.d/moa.sh')
-    print '%s' % (moash)
+    print('%s' % (moash))
 
 
 if __name__ == '__main__':

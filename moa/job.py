@@ -205,7 +205,7 @@ class Job(object):
         ### >>> assert(job.hasCommand('dummy'))
 
         """
-        if command in self.template.commands.keys():
+        if command in list(self.template.commands.keys()):
             return True
         if self.template.backend == 'ruff':
             return self.backend.hasCommand(command)
@@ -355,7 +355,7 @@ class Job(object):
                 sysConf.runId = old_id + 1
                 with open(runIdFile, 'w') as F:
                     F.write("%s" % sysConf.runId)
-        except lockfile.LockFailed, e:
+        except lockfile.LockFailed as e:
             if 'failed to create' in str(e):
                 raise moa.exceptions.MoaDirNotWritable()
             raise
@@ -513,7 +513,7 @@ class Job(object):
             module = __import__(moduleName, globals(),
                                 locals(), [moduleName], -1)
             l.debug("Successfully Loaded module %s" % moduleName)
-        except ImportError, e:
+        except ImportError as e:
             if str(e) == "No module named %s" % moduleName:
                 l.critical("Backend %s does not exists" % backendName)
             l.critical("!! Error loading backend %s" % backendName)

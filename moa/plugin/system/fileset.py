@@ -64,7 +64,7 @@ def fileset_prepare_display(job, basepath, jobpath):
     mappedSets = {}
     fss = job.data.filesets
     #first find the 'sets & singletons'
-    for fsid in fss.keys():
+    for fsid in list(fss.keys()):
         fs = fss[fsid]
         if fs.type == 'set':
             mappedSets[fsid] = {
@@ -80,7 +80,7 @@ def fileset_prepare_display(job, basepath, jobpath):
 
 
     #now find the maps that map to the other sets
-    for fsid in fss.keys():
+    for fsid in list(fss.keys()):
         fs = fss[fsid]
         if fs.type == 'map':
             source = fs.source
@@ -112,7 +112,7 @@ def files(job, args):
 
     """
 
-    filesets = job.template.filesets.keys()
+    filesets = list(job.template.filesets.keys())
     filesets.sort()
     #first print singletons
     fsets = []

@@ -33,7 +33,7 @@ def setstatus():
         if os.path.exists(pidFile):
             os.unlink(pidFile)
 
-    print 'SETTING STATE', status
+    print('SETTING STATE', status)
     with open(statusFile, 'w') as F:
         F.write(status)
 

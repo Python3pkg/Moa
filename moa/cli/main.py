@@ -81,12 +81,12 @@ def run_3(wd, exitOnError=True):
 
     #check if we should run this job..
     doRun = sysConf.pluginHandler.run('check_run')
-    if (not sysConf.options.force) and False in doRun.values():
+    if (not sysConf.options.force) and False in list(doRun.values()):
         l.warning("Not running job in %s" % wd)
         return
 
     #see if this is all plugin command callback
-    if command in sysConf.commands.keys():
+    if command in list(sysConf.commands.keys()):
         comInf = sysConf.commands[command]
         if comInf.get('needsJob', False) and not job.isMoa():
             if command == 'status':
@@ -138,7 +138,7 @@ def run_2(force_silent=False):
     # never recursive - jump directly into run_3
     try:
         run_3(wd)
-    except moa.exceptions.MoaInvalidCommandLine, e:
+    except moa.exceptions.MoaInvalidCommandLine as e:
         parser = e.args[0]
         parser.real_error()
 
@@ -181,7 +181,7 @@ def _handle_error(message):
     try:
         sysConf.rc = -1
         sysConf.pluginHandler.run("post_error")
-    except Exception, e:
+    except Exception as e:
         sys.stderr.write("Error - cannot run post_error plugin hook:\n")
         sys.stderr.write(str(e) + "\n\n")
 
@@ -234,7 +234,7 @@ def dispatch():
             sys.exit(-2)
     except moa.exceptions.MoaDirNotWritable:
         _handle_error("the .moa directory is not writable")
-    except IOError, e:
+    except IOError as e:
         _handle_error("IOError - maybe the .moa directory is not writable")
         raise e
     except Exception:

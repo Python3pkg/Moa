@@ -65,7 +65,7 @@ def hook_prompt():
     message = "moa|{{green}}%s{{reset}}|" % ( template)
     if rv:
         snip = ''
-        kys = rv.keys()
+        kys = list(rv.keys())
         kys.sort()
         for k in kys:
             snip += (rv[k])

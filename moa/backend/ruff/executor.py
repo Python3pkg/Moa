@@ -9,7 +9,7 @@ from moa.sysConf import sysConf
 
 def ruffusExecutor(input, output, script, jobData):
 
-    if not sysConf.actor.has_key('files_processed'):
+    if 'files_processed' not in sysConf.actor:
         sysConf.actor.files_processed = []
 
     sysConf.actor.files_processed.append((input, output))

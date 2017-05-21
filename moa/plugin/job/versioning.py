@@ -140,7 +140,7 @@ def hook_pre_run(job):
 
     #template set:
     template_set = job.template.prerequisites
-    template_keys = template_set.keys()
+    template_keys = list(template_set.keys())
     for k in template_keys:
         v = template_set[k]
         rc, val = _run_cl(v)
@@ -171,7 +171,7 @@ def hook_pre_run(job):
             lastv[k] = v
 
     #compare this & last version
-    allkeys = set(version_data.keys() + lastv.keys())
+    allkeys = set(list(version_data.keys()) + list(lastv.keys()))
 
     diffset = {}
     for a in allkeys:

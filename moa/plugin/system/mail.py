@@ -65,7 +65,7 @@ def get_core_message(job):
 
 
 def hook_async_exit():
-    print 'async'
+    print('async')
     pass
 
 

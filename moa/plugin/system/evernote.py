@@ -90,13 +90,13 @@ def hook_postRun():
     pid = os.fork()
     if pid != 0: 
         return
-    print short_title
-    print "\n".join(content)
+    print(short_title)
+    print("\n".join(content))
     #start geeknote process
     moa.ui.message('Sending message to evernote', store=False)
     cl = '%s create --title "%s" --content - --notebook Moa' % (
         sysConf.plugins.system.evernote.geeknote, short_title)
-    print cl
+    print(cl)
     P = sp.Popen(cl, stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE, shell=True)
 
     o,e = P.communicate("\n".join(content))

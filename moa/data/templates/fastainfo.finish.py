@@ -9,7 +9,7 @@ import moa.script
 args = moa.script.getArgs()
 
 def errex(message):
-    print message
+    print(message)
     sys.exit(-1)
 
 statfiles = args['stats_files']
@@ -25,7 +25,7 @@ for sf in statfiles:
         bn = bn.replace('.seq', '')
         data[bn] = d
 
-kys = data.keys()
+kys = list(data.keys())
 kys.sort()
 
 with open('report.md', 'w') as F:

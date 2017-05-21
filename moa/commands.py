@@ -40,17 +40,17 @@ class Commands(UserDict.DictMixin):
 
     def keys(self):
         rv = []
-        for k in self.commands.keys():
+        for k in list(self.commands.keys()):
             if not self.commands[k].get('private', False):
                 rv.append(k)
         return rv   
 
     def getAll(self):
-        return self.commands.keys()
+        return list(self.commands.keys())
         
     def generateUsageString(self, usageHeader):
         u = usageHeader
-        commands = self.keys()
+        commands = list(self.keys())
         commands.sort()
         for _c in commands:
             if self[_c].get('private', False):

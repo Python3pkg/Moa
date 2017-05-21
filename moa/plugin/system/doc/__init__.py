@@ -118,11 +118,11 @@ def _readFromuser(job, ):
     oldstdin = sys.stdin
     sys.stdin = open('/dev/tty')
     txt = []
-    print "Enter your message. First line is used as title."
-    print "Ctrl-d on an empty line to finish..."
+    print("Enter your message. First line is used as title.")
+    print("Ctrl-d on an empty line to finish...")
     while True:
         try:
-            line = raw_input("")
+            line = input("")
             txt.append(line)
         except (EOFError, KeyboardInterrupt):
             break
@@ -278,11 +278,11 @@ def _show_stuff(category, no_messages):
             continue
         fname = os.path.join(stuff_dir, entry)
         article = _readArticle(fname)
-        print "%s  %s" % (article['Date'], article['Author'])
-        print "    Title: %s\n" % article['Title']
+        print("%s  %s" % (article['Date'], article['Author']))
+        print("    Title: %s\n" % article['Title'])
         for line in article['Body']:
-            print "    %s" % line.rstrip()
-        print "\n"
+            print("    %s" % line.rstrip())
+        print("\n")
 
 
 @moa.args.needsJob

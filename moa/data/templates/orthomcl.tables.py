@@ -19,7 +19,7 @@ CUTOFF = 50
 if not os.path.isdir(outdir):
     os.makedirs(outdir)
 
-print 'seq input dir', seqdir
+print('seq input dir', seqdir)
 
 #read seqdir
 allTaxa = []
@@ -34,13 +34,13 @@ for f in os.listdir(seqdir):
     PR = sp.Popen(cl, stdout=sp.PIPE, shell=True)
     o, e = PR.communicate()
     count =  int(o.strip())
-    print "found %d genes for %s" % (count, name)
+    print("found %d genes for %s" % (count, name))
     geneCounts.append((count, name))
 
 allTaxa = [x[1] for x in geneCounts]
 
-print '-- found %d taxa' % len(allTaxa)
-print ", ".join(allTaxa)
+print('-- found %d taxa' % len(allTaxa))
+print(", ".join(allTaxa))
 
 #read incoming taxa seqids
 def readSeqIds(taxon):
@@ -51,7 +51,7 @@ def readSeqIds(taxon):
             sid = line[1:].split()[0]
             seqids.append(sid)
     seqids.sort()
-    print "-- found %d seqids for taxon %s" % (len(seqids), taxon)
+    print("-- found %d seqids for taxon %s" % (len(seqids), taxon))
     return seqids
 
 #read orthomcl configuration
@@ -62,9 +62,9 @@ with open('orthomcl.config') as F:
         line = line.strip()
         if not line: continue
         k, v = [x.strip() for x in line.split('=',1)]
-        print k, v
+        print(k, v)
         if k == 'dbVendor' and v != 'mysql':
-            print 'invalid db', v
+            print('invalid db', v)
             sys.exit(1)
         if k == 'dbConnectString':
             conf['db'] = v.replace('dbi:mysql:', '').split(':')[0]
@@ -81,7 +81,7 @@ ot = conf['orthologTable']
 
 def saveTaxonArray(taxon, seqids, matrix):
     #save array
-    print "--saving array for taxon %s" % taxon
+    print("--saving array for taxon %s" % taxon)
     base = os.path.join(outdir, taxon)
     with open(base + '.tsv', 'w') as F:
         F.write("\t")
@@ -98,7 +98,7 @@ def saveTaxonArray(taxon, seqids, matrix):
 
 def saveTaxonUnique(taxon, seqids, matrix):
     #save array
-    print "-- saving a list of unique genes for taxon %s" % taxon
+    print("-- saving a list of unique genes for taxon %s" % taxon)
     base = os.path.join(outdir, taxon)
     i = 0
     with open(base + '.unique.list', 'w') as F:
@@ -132,8 +132,8 @@ def getHitsForTaxon(taxon):
         yield row
 
 def extendMatrix(taxon, seqids, taxaRead, matrix):
-    print '-- extending matrix based on data from %s' % taxon
-    print '-- already processed are %s' % " ".join(taxaRead)
+    print('-- extending matrix based on data from %s' % taxon)
+    print('-- already processed are %s' % " ".join(taxaRead))
     toAppend = []
     appendIds = []
     
@@ -142,7 +142,7 @@ def extendMatrix(taxon, seqids, taxaRead, matrix):
     belowCutofIndici = []
     for x in taxaRead:
         belowCutofIndici.append(allTaxa.index(x))
-    print '-- taxa read indici %s'% " ".join(map(str, belowCutofIndici))
+    print('-- taxa read indici %s'% " ".join(map(str, belowCutofIndici)))
 
     i = 0
     for g in range(len(seqids)):
@@ -168,13 +168,13 @@ for taxid, taxon in enumerate(allTaxa):
     taxaRead.append(taxon)
     MATRIX=None
 
-    print "## processing taxon %s" % taxon
+    print("## processing taxon %s" % taxon)
     seqids = readSeqIds(taxon)    
     thisTaxId = allTaxa.index(taxon)
 
     outBase = os.path.join('tables', taxon)
     if os.path.exists(outBase + '.npz'):
-        print "--loading %s.npz" % outBase
+        print("--loading %s.npz" % outBase)
         with open(outBase + '.npz') as F:
             _raw = np.load(F)
             MATRIX = _raw['matrix']
@@ -185,8 +185,8 @@ for taxid, taxon in enumerate(allTaxa):
         #set this genes 'self' to 100
         MATRIX[:,thisTaxId] = 100
 
-        print "-- created matrix with %d entries", \
-            len(seqids) * len(allTaxa)
+        print("-- created matrix with %d entries", \
+            len(seqids) * len(allTaxa))
       
         for row in getHitsForTaxon(taxon):
             gene, tax, score = row        
@@ -195,7 +195,7 @@ for taxid, taxon in enumerate(allTaxa):
             try: 
                 taxid = allTaxa.index(tax)
             except:
-                print "cannot find taxon", tax
+                print("cannot find taxon", tax)
                 sys.exit(-1)
             score = float(score)
 
@@ -209,15 +209,15 @@ for taxid, taxon in enumerate(allTaxa):
         toAppend, appendIds = extendMatrix(taxon, seqids, taxaRead, MATRIX)
         SUPMATRIX = np.vstack((SUPMATRIX, toAppend))
         GLOSEQIDS.extend(appendIds)
-        print '-- Super matrix, appended %d - shape now %s' % (
-            len(appendIds), np.shape(SUPMATRIX))
+        print('-- Super matrix, appended %d - shape now %s' % (
+            len(appendIds), np.shape(SUPMATRIX)))
 
     saveTaxonArray(taxon, seqids, MATRIX)
     saveTaxonUnique(taxon, seqids, MATRIX)
 
-    print "## finished processing taxon %s" % taxon
+    print("## finished processing taxon %s" % taxon)
 
-print "-- Saving super matrix"
+print("-- Saving super matrix")
 with open('tables/super.tsv', 'w') as F:
     F.write("\t")
     F.write("\t".join(allTaxa))
@@ -230,7 +230,7 @@ with open('tables/super.tsv', 'w') as F:
             F.write("\t")
         F.write("\n")
 
-print '-- Saving SuperSimpleTable'
+print('-- Saving SuperSimpleTable')
 coreGenome = []
 with open('tables/super.simple.tsv', 'w') as F:
     F.write("\t")
@@ -242,7 +242,7 @@ with open('tables/super.simple.tsv', 'w') as F:
         #MATRIX[:,thisTaxId] = 100
         i += 1
         if i < 5: 
-            print ", ".join(map(str, SUPMATRIX[g,:]))
+            print(", ".join(map(str, SUPMATRIX[g,:])))
 
         if np.min(SUPMATRIX[g,:]) >= 80: 
             coreGenome.append(GLOSEQIDS[g])
@@ -256,12 +256,12 @@ with open('tables/super.simple.tsv', 'w') as F:
             F.write("\t")
         F.write("\n")
 
-print '-- Saving core genome'
+print('-- Saving core genome')
 with open('tables/core.list', 'w') as F:
     for gene in coreGenome:
         F.write("%s\n" % gene)
 
-print "## DONE"
+print("## DONE")
 
 
 

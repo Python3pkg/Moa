@@ -71,7 +71,7 @@ def fixOld(wd):
             if fsmatch:
                 name, comp = fsmatch.groups()
                 l.info("Found fileset component %s %s" % (name, comp))
-                if not filesets.has_key(name): filesets[name] = {}
+                if name not in filesets: filesets[name] = {}
                 filesets[name][comp] = v
             else:                
                 l.info("found parameter %s=%s" % (k,v))
@@ -79,7 +79,7 @@ def fixOld(wd):
                     k = k.replace('%s_' % job.template.moa_id, '')
                     l.info("  -> saving to %s=%s" % (k,v))
                 job.conf[k] = v
-        for fs in filesets.keys():
+        for fs in list(filesets.keys()):
             fsinf = filesets[fs]
             l.info("processing fileset %s" % fs)
             fsdir = fsinf.get('dir', '*')

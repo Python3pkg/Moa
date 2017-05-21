@@ -121,7 +121,7 @@ def _writeLog(status):
 
     commandInfo = {}
     logLevel = logging.INFO
-    if sysConf.originalCommand in sysConf.commands.keys():
+    if sysConf.originalCommand in list(sysConf.commands.keys()):
         commandInfo = sysConf.commands[sysConf.originalCommand]
         logLevel = commandInfo.get('logLevel', logging.DEBUG)
     l.debug("Logging %s" % sysConf.originalCommand)

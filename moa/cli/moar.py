@@ -22,7 +22,7 @@ def moar():
     if args.background and cl[-1] != '&':
         cl = '( ' + cl + ' )& '
 
-    print 'executing:', cl
+    print('executing:', cl)
 
     base = os.path.abspath(os.getcwd())
 
@@ -41,10 +41,10 @@ def moar():
             continue
 
         if args.test:
-            print 'would executed in', localpath
-            print '   ', cl
+            print('would executed in', localpath)
+            print('   ', cl)
         else:
-            print 'executing in %s' % localpath
+            print('executing in %s' % localpath)
             P = sp.Popen(cl, cwd=path, shell=True)
             P.wait()
 

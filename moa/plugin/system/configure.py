@@ -48,7 +48,7 @@ def show(job, args):
 
     moa.utils.moaDirOrExit(job)
 
-    keys = job.conf.keys()
+    keys = list(job.conf.keys())
     keys.sort()
 
     rawTemplate = job.template.getRaw()
@@ -136,7 +136,7 @@ def show(job, args):
     closeR = moa.ui.fformat('{{reset}}', newline=False, f='j')
 
     #print outkeys
-    zipped = zip(outkeys, outvals, outflags)
+    zipped = list(zip(outkeys, outvals, outflags))
 
     zipped.sort(lambda x, y: cmp(x[0].lstrip('_'), y[0].lstrip('_')))
     #print outkeys
@@ -147,7 +147,7 @@ def show(job, args):
         moa.ui.fprint(("%%-%ds" % maxKeylen) % key, f='jinja', newline=False)
         moa.ui.fprint(" " + flag + "  ", f='jinja', newline=False)
         if len(str(val)) == 0:
-            print
+            print()
 
         if args.showUnrendered:
             mainval = val

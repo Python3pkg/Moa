@@ -160,7 +160,7 @@ class RuffMapJob(RuffBaseJob):
         #empty the ruffus node name cache needs to be empty -
         #otherwise ruffus might think that we're rerunning jobs
         if hasattr(ruffusExecutor, 'pipeline_task'):
-            for k in ruffusExecutor.pipeline_task._name_to_node.keys():
+            for k in list(ruffusExecutor.pipeline_task._name_to_node.keys()):
                 del ruffusExecutor.pipeline_task._name_to_node[k]
         return rc
                  

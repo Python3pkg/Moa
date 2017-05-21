@@ -94,11 +94,11 @@ class MoaFormatter(logging.Formatter):
         try:
             fmtter = logging.Formatter.format(self, record)
         except TypeError:
-            print "Error with record %s" % record
-            print dir(record)
-            print record.args
-            print 'msg:', record.msg
-            print record.module
+            print("Error with record %s" % record)
+            print(dir(record))
+            print(record.args)
+            print('msg:', record.msg)
+            print(record.module)
             raise
 
         return fmtter
@@ -154,7 +154,7 @@ def _callLogger(logFunc, args, kwargs):
     elif args:
         logFunc(", ".join(map(str, args)))
     if kwargs:
-        for k in kwargs.keys():
+        for k in list(kwargs.keys()):
             logFunc(" - %s : %s" % (k, kwargs[k]))
 
 

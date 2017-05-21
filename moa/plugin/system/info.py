@@ -113,7 +113,7 @@ def out(job, args):
     if out == None:
         moa.ui.exitError("No stdout found")
     else:
-        print out
+        print(out)
 
 @moa.args.needsJob
 @moa.args.doNotLog
@@ -126,7 +126,7 @@ def err(job, args):
     if err == None:
         moa.ui.exitError("No stderr found")
     else:
-        print err
+        print(err)
 
 @moa.args.doNotLog
 @moa.args.command
@@ -134,7 +134,7 @@ def version(job, args):
     """
     print moa version number
     """
-    print sysConf.getVersion()
+    print(sysConf.getVersion())
 
 @moa.args.private
 @moa.args.doNotLog
@@ -144,13 +144,13 @@ def rehash(job, args):
     cache a list of variables for command line completion
 
     """
-    print job
-    print job.isMoa()
+    print(job)
+    print(job.isMoa())
     globalCommandFile = os.path.join(
         os.path.expanduser('~'), '.config', 'moa', 'globalCommands')
 
     globalCommands = []
-    for c in sysConf.commands.keys():
+    for c in list(sysConf.commands.keys()):
         
         if sysConf.commands[c].get('needsJob', False):
             continue
@@ -172,10 +172,10 @@ def raw_commands(job, args):
     by software interacting with Moa.
     """
     commands = sysConf.commands
-    c = commands.keys()
+    c = list(commands.keys())
     if job.template.name != 'nojob':
         c.extend(job.template.commands)
-    print ' '.join(c)
+    print(' '.join(c))
 
 @moa.args.private
 @moa.args.doNotLog
@@ -186,7 +186,7 @@ def raw_parameters(job, args):
     """
     if not job.isMoa():
         return
-    print " ".join(job.conf.keys())
+    print(" ".join(list(job.conf.keys())))
 
 TESTRAWCOMMANDS = '''
 out=`moa raw_commands`

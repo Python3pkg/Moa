@@ -65,7 +65,7 @@ def sgeRunner(wd, cl, conf={}, **kwargs):
     if len(sysConf.job.data.sge.get('jidlist', [])) > 1:
         lastJids = sysConf.job.data.sge.get('jidlist')[-1]
     
-    print command, lastJids
+    print(command, lastJids)
 
 
     if command == 'run':
@@ -91,7 +91,7 @@ def sgeRunner(wd, cl, conf={}, **kwargs):
     qcl.append('-V')
     qcl.extend(cl)
 
-    print " ".join(qcl)
+    print(" ".join(qcl))
     #dump the configuration in the environment
     for k in conf:
         # to prevent collusion, prepend all env variables
@@ -114,7 +114,7 @@ def sgeRunner(wd, cl, conf={}, **kwargs):
     moa.ui.message("submitted job with sge job id %s " % jid)
 
     #store the job id submitted
-    if not sysConf.job.data.sge.jids.has_key(command):
+    if command not in sysConf.job.data.sge.jids:
             sysConf.job.data.sge.jids[command] = []
     sysConf.job.data.sge.jids[command].append(jid)
     return p.returncode

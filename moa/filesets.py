@@ -37,7 +37,7 @@ def prepare(job):
         l.critical("%s" % pprint.pformat(job.conf))
         raise
         
-    if not job.template.has_key('filesets'):
+    if 'filesets' not in job.template:
         return
 
     #do some sanity checking first
@@ -63,11 +63,11 @@ def prepare(job):
     if nosets > 1:
         tmpE('More than one "set" fileset defined')
 
-    if len(job.template.filesets.keys()) > 0:
+    if len(list(job.template.filesets.keys())) > 0:
         job.conf['moa_filesets'] = []
         job.conf.doNotSave.append('moa_filesets')
 
-    for fsid in job.template.filesets.keys():
+    for fsid in list(job.template.filesets.keys()):
         job.conf['moa_filesets'].append(fsid)
         fs = job.template.filesets[fsid]
             
@@ -114,10 +114,10 @@ def render(job):
 
     #import pprint
     #pprint.pprint(renJobConf)
-    if not job.template.has_key('filesets'):
+    if 'filesets' not in job.template:
         return
 
-    fileSets = job.template.filesets.keys()
+    fileSets = list(job.template.filesets.keys())
 
     import copy
     allSets = copy.copy(fileSets)
@@ -134,7 +134,7 @@ def render(job):
         l.debug("preparing fileset '%s' %s (from %s)" % (
                 fsid, renJobConf.get(fsid, 'undef'), job.wd))
 
-        if not renJobConf.has_key(fsid):
+        if fsid not in renJobConf:
             moa.ui.exitError("Undefined fileset %s" % fsid)
 
         #Resolve filesets - first the NON-map sets
@@ -148,8 +148,8 @@ def render(job):
             if not fs.source:
                 moa.ui.exitError("Map fileset must have a source!")
             
-            if not job.data.filesets.has_key(fs.source) or \
-                    not job.data.filesets[fs.source].has_key('files') or \
+            if fs.source not in job.data.filesets or \
+                    'files' not in job.data.filesets[fs.source] or \
                     not job.data.filesets[fs.source].files.resolved:
                 fileSets.append(fsid)
                 continue
@@ -175,7 +175,7 @@ def render(job):
     job.data.prerequisites = []
     job.data.others = []
     
-    for fsid in job.template.filesets.keys():
+    for fsid in list(job.template.filesets.keys()):
         fs = job.template.filesets[fsid]
         if fs.category == 'input':
             job.data.inputs.append(fsid)
@@ -189,7 +189,7 @@ def render(job):
         #add a shortcut - easier access alter
         job.data['%s_files' % fsid] = job.data.filesets[fsid].files
 
-    for fsid in job.data.filesets.keys():
+    for fsid in list(job.data.filesets.keys()):
         fs = job.data.filesets[fsid]
         l.debug('Found fileset %s (%s) with %d files' % (
                 fsid, fs.type, len(fs.files)))

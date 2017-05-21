@@ -39,8 +39,8 @@ master_doc = 'index'
 
 # General information about the project.
 
-project = u'Moa'
-copyright = u'2010-2012 Mark Fiers'
+project = 'Moa'
+copyright = '2010-2012 Mark Fiers'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -186,8 +186,8 @@ latex_font_size = '11pt'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'MoaManual.tex', u'Moa Documentation',
-   u'Mark Fiers', 'manual'),
+  ('index', 'MoaManual.tex', 'Moa Documentation',
+   'Mark Fiers', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

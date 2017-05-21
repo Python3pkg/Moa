@@ -143,7 +143,7 @@ class MoaArgumentParser(argparse.ArgumentParser):
 
         self.error_message = message
 
-        raise moa.exceptions.MoaInvalidCommandLine, self
+        raise moa.exceptions.MoaInvalidCommandLine(self)
 
     def real_error(self):
         """
@@ -289,22 +289,22 @@ def addFlag(*args, **kwargs):
 
 
 def needsJob(f):
-    sysConf.commands[f.func_name]['needsJob'] = True
+    sysConf.commands[f.__name__]['needsJob'] = True
     return f
 
 
 def doNotLog(f):
-    sysConf.commands[f.func_name]['logJob'] = False
+    sysConf.commands[f.__name__]['logJob'] = False
     return f
 
 
 def localRecursive(f):
-    sysConf.commands[f.func_name]['recursive'] = 'local'
+    sysConf.commands[f.__name__]['recursive'] = 'local'
     return f
 
 
 def private(f):
-    sysConf.commands[f.func_name]['private'] = True
+    sysConf.commands[f.__name__]['private'] = True
     return f
 
 

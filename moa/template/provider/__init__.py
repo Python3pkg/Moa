@@ -37,7 +37,7 @@ class Providers(object):
         self.order = []
 
         _order = []
-        for pName in sysConf.template.providers.keys():
+        for pName in list(sysConf.template.providers.keys()):
             pInfo = sysConf.template.providers[pName]
 
             is_enabled = pInfo.get('enabled', False)

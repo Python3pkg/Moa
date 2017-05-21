@@ -161,8 +161,8 @@ def getProcessInfo(pid):
     if not out:
         return {}
 
-    pi = dict(zip(
-        'uid pid ppid c stime tty time cmd'.split(), out))
+    pi = dict(list(zip(
+        'uid pid ppid c stime tty time cmd'.split(), out)))
 
     # check if this is moa invocation
     if 'python' in pi['cmd'] and \
@@ -286,7 +286,7 @@ def flog(func):
         l.critical("Executing %s" % func.__name__)
         for a in args:
             l.error("  - calling with arg %s" % a)
-        for k in kwargs.keys():
+        for k in list(kwargs.keys()):
             l.error("  - calling with kwargs %s=%s" % (k, kwargs[k]))
         return func(*args, **kwargs)
     return flogger

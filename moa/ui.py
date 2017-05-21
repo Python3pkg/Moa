@@ -46,7 +46,7 @@ FORMAT_CODES_ANSI = {}
 for c in sysConf.ansi:
     FORMAT_CODES_ANSI[c] = chr(27) + "["  + sysConf.ansi[c] + "m"
     
-FORMAT_CODES_NOANSI = dict([(x,"") for x in FORMAT_CODES_ANSI.keys()])
+FORMAT_CODES_NOANSI = dict([(x,"") for x in list(FORMAT_CODES_ANSI.keys())])
  
 def _appendMessage(status, message):
     """
@@ -188,7 +188,7 @@ def fsCompleter(text, state):
     g("text   : ", text)
     g("state  :", state)
 
-    if _FSCOMPLETECACHE and text in _FSCOMPLETECACHE.keys():
+    if _FSCOMPLETECACHE and text in list(_FSCOMPLETECACHE.keys()):
         try:
             #rv = _FSCOMPLETECACHE[text]
             #g(str(rv))
@@ -332,7 +332,7 @@ def askUser(parameter, default="", xtra_history=None):
     if history_file and os.path.exists(history_file):
         readline.read_history_file(history_file)
 
-    vl = raw_input('%s\n> ' % parameter) 
+    vl = input('%s\n> ' % parameter) 
 
     readline.set_startup_hook() 
 

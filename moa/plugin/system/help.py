@@ -55,7 +55,7 @@ def help(job, args):
     """
 
     template_name = args.template
-    print template_name
+    print(template_name)
     tmpjob = None
     if not template_name is None:
         #create a tmp job
@@ -75,12 +75,12 @@ def help(job, args):
             cat = str(p.category).strip()
         else:
             cat = ""
-        if not template._categories.has_key(cat):
+        if cat not in template._categories:
             template._categories[cat] = []
         template._categories[cat].append(pn)
 
     #if not template.has_key('parameter_category_order'):
-    template.parameter_category_order = template._categories.keys()
+    template.parameter_category_order = list(template._categories.keys())
     template.parameter_category_order.sort()
 
 
@@ -108,7 +108,7 @@ def welcome(job):
     """
     print a welcome message
     """
-    clist = sysConf.commands.keys()
+    clist = list(sysConf.commands.keys())
     clist.sort()
     commands =  "\n".join(textwrap.wrap(
         ", ".join(clist),

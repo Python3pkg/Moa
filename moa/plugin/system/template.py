@@ -95,9 +95,9 @@ def list(job, args):
                 f='jinja')
             for line in textwrap.wrap(txt, initial_indent=' - ', width=80,
                                       subsequent_indent='   '):
-                print line
+                print(line)
         else:
-            print '%s:%s' % name
+            print('%s:%s' % name)
 
 
 @moa.args.private
@@ -128,7 +128,7 @@ def dumpTemplate(job, args):
     Show the raw template sysConf.
     """
     template = _getTemplateFromData(job)
-    print template.pretty()
+    print(template.pretty())
 
 LISTTEST = '''
 moa list | grep -q "map"

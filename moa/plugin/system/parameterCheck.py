@@ -75,7 +75,7 @@ def test(job, args):
     """
     messages = []
     rconf = job.conf.render()
-    for p in rconf.keys():
+    for p in list(rconf.keys()):
         if p in job.conf.doNotCheck:
             continue
 
@@ -96,7 +96,7 @@ def test(job, args):
                 #ignore this
                 pass
             else:
-                print
+                print()
                 messages.append(("Not a file",
                                  "%s=%s " % (p, rconf[p])))
         elif (pt.type == 'directory'

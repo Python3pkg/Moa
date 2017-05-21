@@ -42,7 +42,7 @@ class templateTest(unittest.TestCase):
         dummyargs = Yaco.Yaco()
         dummyargs.command = 'unittest'
         rc = self.job.execute(self.job, dummyargs)
-        print rc
+        print(rc)
         self.assertEqual(rc, 0, 'test failed for %s' %
                          templateName)
 

@@ -97,7 +97,7 @@ class RuffCommands(Yaco.Yaco):
 
     def  render(self, command, data):
 
-        if not self.has_key(command):
+        if command not in self:
             return ""
 
         this = self[command]

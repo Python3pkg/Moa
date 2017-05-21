@@ -65,7 +65,7 @@ class Ruff(moa.backend.BaseBackend):
         pass
         
     def hasCommand(self, command):
-        return command in self.commands.keys()
+        return command in list(self.commands.keys())
 
     def defineOptions(self, parser):
         pass
@@ -75,9 +75,9 @@ class Ruff(moa.backend.BaseBackend):
         Run a 'simple' template command
         """
 
-        if not self.commands.has_key(command):
+        if command not in self.commands:
             l.debug("command '%s' does not exists" % command)
-            l.debug("was able to find: %s" % str(self.commands.keys()))
+            l.debug("was able to find: %s" % str(list(self.commands.keys())))
             raise moa.exceptions.MoaCommandDoesNotExist
         
         #see how it should execute
@@ -101,7 +101,7 @@ class Ruff(moa.backend.BaseBackend):
         #empty the ruffus node name cache needs to be empty -
         #otherwise ruffus might think that we're rerunning jobs
         if hasattr(executor, 'pipeline_task'):
-            for k in executor.pipeline_task._name_to_node.keys():
+            for k in list(executor.pipeline_task._name_to_node.keys()):
                 del executor.pipeline_task._name_to_node[k]
                 
         return rc

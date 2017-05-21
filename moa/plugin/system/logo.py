@@ -24,10 +24,10 @@ def hook_preRun():
     #don't print a logo during a no-job run
     if job.template.name == 'nojob':
         return
-    if 'MOA_NOLOGO' in os.environ.keys():
+    if 'MOA_NOLOGO' in list(os.environ.keys()):
         return
     #adjust the logo for term width
-    TERMHEIGHT, TERMWIDTH = map(int, os.popen('stty size', 'r').read().split())
+    TERMHEIGHT, TERMWIDTH = list(map(int, os.popen('stty size', 'r').read().split()))
     MOABASE = moa.utils.getMoaBase()
     version = sysConf['sysConf'].getVersion()
     logoFile = os.path.join(MOABASE, 'share', 'logo', 'moa.logo.txt')
@@ -35,4 +35,4 @@ def hook_preRun():
     logo = logo.replace('###', 't' * (TERMWIDTH - 64))
     logo = logo.replace('##', 't' * (TERMWIDTH - 59 - len(version)))
     logo = logo.replace('VERSION', version)
-    print logo    
+    print(logo)    

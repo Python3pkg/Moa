@@ -5,7 +5,7 @@ import sys
 import yaml
 
 def errex(message):
-    print message
+    print(message)
     sys.exit(-1)
 
 

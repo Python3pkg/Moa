@@ -203,7 +203,7 @@ def moaprompt():
 
     pstring = "\r%(bg)s%(spacer)s%(moal)s%(tname)s%(normal)s%(cstate)s%(cchar)s%(status)s%(normal)s %(time)s%(reset)s" % data
 
-    print pstring
+    print(pstring)
 
 if __name__ == '__main__':
     moaprompt()

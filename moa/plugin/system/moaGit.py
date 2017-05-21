@@ -85,7 +85,7 @@ def _checkGitIgnore(repo):
     .moa files. (unless specified differntly in the config
     """
 
-    print repo
+    print(repo)
     gitignoreFile = os.path.join(repo, '.gitignore')
     if not os.path.exists(gitignoreFile):
         if 'ignore' in sysConf.plugins.system.moaGit:
@@ -227,7 +227,7 @@ def gitlog(job, args):
     for c in repo.iter_commits():
         t = time.strftime("%d %b %Y %H:%M", time.localtime(c.authored_date))
 
-        if c in tags.keys():
-            print " tag| %s" % tags[c]
+        if c in list(tags.keys()):
+            print(" tag| %s" % tags[c])
 
-        print "%3s | %s | %s" % (c.count(), t, c.message.split("\n")[0])
+        print("%3s | %s | %s" % (c.count(), t, c.message.split("\n")[0]))

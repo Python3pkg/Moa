@@ -212,7 +212,7 @@ def openlavaRunner(wd, cl, conf={}, **kwargs):
 
     moa.ui.message("Running %s:" % " ".join(map(str, bsub_cl)))
     moa.ui.message("(copy of) the bsub script: %s" % tmpfile)
-    p = sp.Popen(map(str, bsub_cl), cwd=wd, stdout=sp.PIPE, stdin=sp.PIPE)
+    p = sp.Popen(list(map(str, bsub_cl)), cwd=wd, stdout=sp.PIPE, stdin=sp.PIPE)
     o, e = p.communicate("\n".join(sc))
 
     jid = int(o.split("<")[1].split(">")[0])
